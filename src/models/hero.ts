@@ -46,4 +46,5 @@ export interface IHero {
   ['2Pick']: number
   ['1Win']: number
   ['1Pick']: number
+  abilities: string[]
 }
