@@ -1,3 +1,6 @@
+import { IAbility } from './ability.model'
+import { ITalent } from './talent.model'
+
 export interface IHero {
   id: number
   name: string
@@ -46,5 +49,6 @@ export interface IHero {
   ['2Pick']: number
   ['1Win']: number
   ['1Pick']: number
-  abilities: string[]
+  abilities: IAbility[]
+  talents: ITalent[]
 }
