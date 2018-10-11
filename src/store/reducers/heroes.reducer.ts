@@ -7,7 +7,7 @@ export interface IHeroesState {
   loading: boolean
 }
 
-export const initialState = {
+export const initialState: IHeroesState = {
   entities: {},
   loaded: false,
   loading: false

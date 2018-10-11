@@ -1,13 +1,25 @@
 import * as heroesActions from '../actions/heroes.action'
-import { ofType } from 'redux-observable'
+import * as fromReducer from '../reducers'
+import { ofType, ActionsObservable, StateObservable } from 'redux-observable'
 import { map, switchMap } from 'rxjs/operators'
 import { from } from 'rxjs'
 import { IHero } from '../../models/hero.model'
 
-export const fetchHeroesEpic = (action$, state$, { openDotaService }) => action$.pipe(
+interface IFetchHeroesEpicDependencies {
+  heroesService: {
+    getHeroes: () => Promise<IHero[]>
+  }
+}
+
+export const fetchHeroesEpic = (
+  action$: ActionsObservable<heroesActions.HeroAction>, 
+  state$: StateObservable<fromReducer.IState>, 
+  { heroesService }: IFetchHeroesEpicDependencies
+) => 
+action$.pipe(
   ofType(heroesActions.HEROES_FETCH),
   switchMap(() =>
-    from(openDotaService.getHeroes())
+    from(heroesService.getHeroes())
     .pipe(
       map(heroes => heroesActions.doFetchHeroesFulfilled(heroes))
     )

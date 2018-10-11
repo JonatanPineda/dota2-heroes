@@ -5,6 +5,11 @@ export interface IState {
   heroes: fromHeroes.IHeroesState
 }
 
+export const initialState: IState = {
+  heroes: fromHeroes.initialState
+}
+
+
 export const reducers = combineReducers<IState>({
   heroes: fromHeroes.reducer
 })
