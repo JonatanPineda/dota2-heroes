@@ -5,6 +5,7 @@ export interface IHero {
   id: number
   name: string
   localizedName: string
+  primaryAttr: string
   attackType: string 
   roles: string[]
   img: string
@@ -31,7 +32,8 @@ export interface IHero {
   cmEnabled: boolean
   legs: number
   proWin: number
-  propPick: number
+  proPick: number
+  proBan: number
   heroId: number
   ['8Pick']: number
   ['8Win']: number
