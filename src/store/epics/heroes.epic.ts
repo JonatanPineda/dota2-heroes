@@ -2,12 +2,12 @@ import * as heroesActions from '../actions/heroes.action'
 import * as fromReducer from '../reducers'
 import { ofType, ActionsObservable, StateObservable } from 'redux-observable'
 import { map, switchMap } from 'rxjs/operators'
-import { from } from 'rxjs'
+import { Observable }  from 'rxjs'
 import { IHero } from '../../models/hero.model'
 
 interface IFetchHeroesEpicDependencies {
   heroesService: {
-    getHeroes: () => Promise<IHero[]>
+    getHeroes: () => Observable<IHero[]>
   }
 }
 
@@ -18,10 +18,11 @@ export const fetchHeroesEpic = (
 ) => 
 action$.pipe(
   ofType(heroesActions.HEROES_FETCH),
-  switchMap(() =>
-    from(heroesService.getHeroes())
-    .pipe(
-      map(heroes => heroesActions.doFetchHeroesFulfilled(heroes))
-    )
-  )
+  switchMap(() => {
+    return heroesService
+      .getHeroes()
+      .pipe(
+        map(heroes => heroesActions.doFetchHeroesFulfilled(heroes))
+      )
+  })
 )

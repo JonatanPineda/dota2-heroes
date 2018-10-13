@@ -1,4 +1,7 @@
 import OpenDotaService from '../opendota.service'
+import { TestScheduler } from 'rxjs/testing'
+import { ajax } from 'rxjs/ajax'
+import { of } from 'rxjs'
 
 const heroesResponse = [
   {
@@ -282,8 +285,25 @@ const heroesResponseExpected = [
     }
   ]
 
+const testScheduler = new TestScheduler((actual, expected) => {
+  expect(actual).toEqual(expected)
+})
+
 describe('Open Dota API service', () => {
-  it('Should fetch heroes camelized with abilities and talents', async () => {
+  it('Should fetch heroes', () => {
+    testScheduler.run(({ hot, cold, expectObservable}) => {
+      ajax.getJSON = jest.fn().mockImplementationOnce(
+        () => cold('-a', {
+          a: heroesResponse
+        })
+      )
+
+      const actual = OpenDotaService.getHeroes()
+      expectObservable(actual).toBe('-b', { b: heroesResponseExpected})
+    })
+})
+
+/*it('Should fetch heroes camelized with abilities and talents', async () => {
     window.fetch = jest.fn().mockImplementationOnce(() => new Promise(
       (resolve, reject) => {
         resolve({
@@ -296,5 +316,5 @@ describe('Open Dota API service', () => {
     const expected = heroesResponseExpected
 
     expect(actual).toEqual(expected)
-  })
+  })*/
 })

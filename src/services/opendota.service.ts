@@ -1,16 +1,62 @@
 import { camelizeKeys } from 'humps'
 import { IHero } from '../models/hero.model'
+import * as heroesAbilitiesAndTalents from 'dotaconstants/build/hero_abilities.json'
+import * as abilities from 'dotaconstants/build/abilities.json'
+import { Observable } from 'rxjs'
+import { ajax } from 'rxjs/ajax'
+import { map } from 'rxjs/operators'
 
 export const OPEN_DOTA_URL = 'https://api.opendota.com'
 export const OPEN_DOTA_API = `${OPEN_DOTA_URL}/api`
 
 class OpenDotaService {
-  async getHeroes(): Promise<IHero[]> { 
+  public getHeroes(): Observable<IHero[]> {
+    return ajax
+      .getJSON(`${OPEN_DOTA_URL}/heroStats`)
+      .pipe(
+        map(heroes => camelizeKeys(heroes) as any[]),
+        map(
+          camelizedHeroes => {
+            const heroesWithAbilitiesAndTalents = camelizedHeroes.map(
+              hero => {
+                const heroData = heroesAbilitiesAndTalents[hero.name]
+                return {
+                  ...hero,
+                  img: `${OPEN_DOTA_URL}${hero.img}`,
+                  icon: `${OPEN_DOTA_URL}${hero.icon}`,
+                  abilities: heroData.abilities.map(
+                    ability => {
+                      const camelizedAbility = camelizeKeys(abilities[ability])
+                      return {
+                        ...camelizedAbility,
+                        img: `${OPEN_DOTA_URL}${camelizedAbility.img}`
+                      }
+                    }
+                  ),
+                  talents: heroData.talents.map(
+                    talent => {
+                      const camelizedTalent = camelizeKeys(abilities[talent.name])
+                      return {
+                        ...camelizedTalent,
+                        level: talent.level
+                      }
+                    }
+                  )
+                }
+              }
+            )
+
+            return heroesWithAbilitiesAndTalents 
+          }
+        )
+      )
+  }
+
+
+  /*async getHeroes(): Promise<IHero[]> { 
     const response = await fetch(`${OPEN_DOTA_API}/heroStats`)
     const json = await response.json()
     const camelizedJson = await camelizeKeys(json) as any[]
-    const heroesAbilitiesAndTalents = await import('dotaconstants/build/hero_abilities.json')
-    const abilities = await import('dotaconstants/build/abilities.json')
 
     const heroesWithAbilitiesAndTalents = camelizedJson.map(
       hero => {
@@ -42,7 +88,7 @@ class OpenDotaService {
     ) as IHero[]
 
     return heroesWithAbilitiesAndTalents 
-  }
+  }*/
 }
 
 export default new OpenDotaService()
