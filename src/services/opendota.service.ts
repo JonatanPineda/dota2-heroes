@@ -1,5 +1,7 @@
 import { camelizeKeys } from 'humps'
 import { IHero } from '../models/hero.model'
+import { IAbility } from '../models/ability.model'
+import { ITalent} from '../models/talent.model'
 import * as heroesAbilitiesAndTalents from 'dotaconstants/build/hero_abilities.json'
 import * as abilities from 'dotaconstants/build/abilities.json'
 import { Observable } from 'rxjs'
@@ -25,8 +27,9 @@ class OpenDotaService {
                   img: `${OPEN_DOTA_URL}${hero.img}`,
                   icon: `${OPEN_DOTA_URL}${hero.icon}`,
                   abilities: heroData.abilities.map(
-                    ability => {
-                      const camelizedAbility = camelizeKeys(abilities[ability])
+                    (ability: string) => {
+                      const camelizedAbility =
+                        camelizeKeys(abilities[ability]) as IAbility
                       return {
                         ...camelizedAbility,
                         img: `${OPEN_DOTA_URL}${camelizedAbility.img}`
@@ -34,11 +37,12 @@ class OpenDotaService {
                     }
                   ),
                   talents: heroData.talents.map(
-                    talent => {
+                    (talent: ITalent) => {
                       const camelizedTalent = camelizeKeys(abilities[talent.name])
                       return {
                         ...camelizedTalent,
-                        level: talent.level
+                        level: talent.level,
+                        name: talent.name
                       }
                     }
                   )

@@ -1,7 +1,6 @@
 import OpenDotaService from '../opendota.service'
 import { TestScheduler } from 'rxjs/testing'
 import { ajax } from 'rxjs/ajax'
-import { of } from 'rxjs'
 
 const heroesResponse = [
   {
@@ -251,34 +250,42 @@ const heroesResponseExpected = [
      "talents": [
        { 
          "dname": "+10 Strength",
+         "name": "special_bonus_strength_10",
          "level": 1
        },
        {
          "dname": "+20 Attack Speed",
+         "name": "special_bonus_attack_speed_20",
          "level": 1
        },
        {
          "dname": "+400 Blink Cast Range",
+         "name": "special_bonus_unique_antimage_3",
          "level": 2
        },
        {
          "dname": "+15 Agility",
+         "name": "special_bonus_agility_15",
          "level": 2
        },
        {
          "dname": "Blink Uncontrollable Illusion",
+         "name": "special_bonus_unique_antimage_5",
          "level": 3
        },
        {
          "dname": "-2.5s Blink Cooldown",
+         "name": "special_bonus_unique_antimage",
          "level": 3
        },
        {
          "dname": "+25% Spell Shield",
+         "name": "special_bonus_unique_antimage_4",
          "level": 4
        },
        {
          "dname": "-50s Mana Void Cooldown",
+         "name": "special_bonus_unique_antimage_2",
          "level": 4
        }     
      ]
