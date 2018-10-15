@@ -1,6 +1,7 @@
 import { createSelector } from 'reselect'
 import * as fromState from '../reducers'
 import * as fromHeroes from '../reducers/heroes.reducer'
+import { IHero } from 'src/models/hero.model';
 
 export const getHeroesState = createSelector(
   fromState.getState,
@@ -27,4 +28,19 @@ export const getHeroesLoaded = createSelector(
 export const getHeroesLoading = createSelector(
   getHeroesState,
   fromHeroes.getHeroesLoading
+)
+
+export const getSelectedHero = createSelector(
+  getHeroesState,
+  fromHeroes.getSelectedHero
+)
+
+export const getHeroVisualized = createSelector(
+  getSelectedHero,
+  getHeroesEntities,
+  (heroId, heroesEntities): IHero => {
+    const hero = heroesEntities[heroId]
+    
+    return hero
+  }
 )

@@ -1,13 +1,14 @@
 import * as React from 'react'
 import * as fromStore from '../store'
 import { Search } from 'semantic-ui-react'
-import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
+import { Dispatch } from 'redux'
 import { IHero } from 'src/models/hero.model';
+import { Container } from 'semantic-ui-react'
 
 interface IProps {
-  onFetchHeroes: () => void
-  heroes: IHero[]
+  heroes: IHero[],
+  onVisualizeHero: (heroId: number) => void
 }
 
 interface IState {
@@ -19,14 +20,17 @@ class HeroSearcher extends React.Component<IProps, IState> {
     searchText: ''
   }
 
-  public componentDidMount() {
-    this.props.onFetchHeroes()
-  }
-
   public handleSearchChange = (e: any) => {
     this.setState({
       searchText: e.currentTarget.value
     })
+  }
+
+  public handleResultSelect = (e: any, data: any) => {
+    this.setState({
+      searchText: data.result.title
+    })
+    this.props.onVisualizeHero(data.result.id)
   }
 
   public render() {
@@ -34,23 +38,27 @@ class HeroSearcher extends React.Component<IProps, IState> {
     const { searchText } = this.state
 
     const searchedHeroes = heroes.filter(
-      hero => hero.localizedName.toLowerCase().includes(searchText.toLowerCase())
+      hero => hero.localizedName.toLowerCase().indexOf(searchText.toLowerCase()) !== -1
     )
     .map(
       hero => ({
         title: hero.localizedName,
-        image: hero.icon
+        image: hero.icon,
+        id: hero.id
       })
     )
     
     return (
-      <Search 
-        input={{ fluid: true }}
-        fluid={true}
-        results={searchedHeroes}
-        onSearchChange={this.handleSearchChange}
-        size={'large'}
-      />
+      <Container text={true}>
+        <Search 
+          input={{ fluid: true }}
+          fluid={true}
+          results={searchedHeroes}
+          onSearchChange={this.handleSearchChange}
+          size={'mini'}
+          onResultSelect={this.handleResultSelect}
+        />
+      </Container>
     )
   }
 }
@@ -60,7 +68,7 @@ const mapStateToProps = (state: fromStore.IState)  => ({
 })
 
 const mapDispatchToProps = (dispatch: Dispatch<fromStore.HeroAction>) => ({
-  onFetchHeroes: () => dispatch(fromStore.doFetchHeroes())
+  onVisualizeHero: (heroId: number) => dispatch(fromStore.doVisualizeHero(heroId)) 
 })
 
 export default connect(

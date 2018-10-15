@@ -2,6 +2,7 @@ import { IHero } from '../../models/hero.model'
 
 export const HEROES_FETCH = 'HEROES_FETCH'
 export const HEROES_FETCH_FULFILLED = 'HEROES_FETCH_FULFILLED'
+export const HERO_VISUALIZE = 'HERO_VISUALIZE'
 
 export interface IFetchHeroes {
   type: typeof HEROES_FETCH
@@ -25,4 +26,18 @@ export const doFetchHeroesFulfilled = (heroes: IHero[]): IFetchHeroesFulfilled =
   }
 })
 
-export type HeroAction = IFetchHeroes | IFetchHeroesFulfilled
+export interface IVisualizeHero {
+  type: typeof HERO_VISUALIZE
+  payload: {
+    heroId: number
+  }
+}
+
+export const doVisualizeHero = (heroId: number): IVisualizeHero => ({
+  type: HERO_VISUALIZE,
+  payload: {
+    heroId
+  }
+})
+
+export type HeroAction = IFetchHeroes | IFetchHeroesFulfilled | IVisualizeHero

@@ -14,7 +14,8 @@ describe('HeroesSelectors', () => {
           1: hero
         },
         loaded: true,
-        loading: false
+        loading: false,
+        selectedHero: 1
       }
     }
 
@@ -48,4 +49,11 @@ describe('HeroesSelectors', () => {
     expect(fromSelectors.getHeroesLoaded(state)).toEqual(true)
   })
 
+  it('getSelectedHero', () => {
+    expect(fromSelectors.getSelectedHero(state)).toEqual(1)
+  })
+
+  it('getHeroVisualized', () => {
+    expect(fromSelectors.getHeroVisualized(state)).toEqual(hero)
+  })
 })
