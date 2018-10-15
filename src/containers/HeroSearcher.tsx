@@ -1,6 +1,6 @@
 import * as React from 'react'
 import * as fromStore from '../store'
-import { Search, Container } from 'semantic-ui-react'
+import { Search } from 'semantic-ui-react'
 import { Dispatch } from 'redux'
 import { connect } from 'react-redux'
 import { IHero } from 'src/models/hero.model';
@@ -44,20 +44,13 @@ class HeroSearcher extends React.Component<IProps, IState> {
     )
     
     return (
-      <Container 
-        text={true}
-        style={{
-          paddingTop: '5em'
-        }}
-      >
-        <Search 
-          input={{ fluid: true }}
-          fluid={true}
-          results={searchedHeroes}
-          onSearchChange={this.handleSearchChange}
-          size={'large'}
-        />
-      </Container>
+      <Search 
+        input={{ fluid: true }}
+        fluid={true}
+        results={searchedHeroes}
+        onSearchChange={this.handleSearchChange}
+        size={'large'}
+      />
     )
   }
 }
