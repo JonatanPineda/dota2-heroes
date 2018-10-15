@@ -2,7 +2,7 @@ import { ActionsObservable, StateObservable } from "redux-observable"
 import { fetchHeroesEpic } from '../heroes.epic'
 import * as heroesActions from '../../actions/heroes.action'
 import * as fromReducer from '../../reducers'
-import { Subject, of } from 'rxjs';
+import { Subject } from 'rxjs';
 import { TestScheduler } from 'rxjs/testing'
  
 const testScheduler = new TestScheduler((actual, expected) => {

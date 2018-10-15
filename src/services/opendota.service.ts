@@ -14,7 +14,7 @@ export const OPEN_DOTA_API = `${OPEN_DOTA_URL}/api`
 class OpenDotaService {
   public getHeroes(): Observable<IHero[]> {
     return ajax
-      .getJSON(`${OPEN_DOTA_URL}/heroStats`)
+      .getJSON(`${OPEN_DOTA_API}/heroStats`)
       .pipe(
         map(heroes => camelizeKeys(heroes) as any[]),
         map(

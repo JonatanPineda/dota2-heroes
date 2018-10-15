@@ -15,7 +15,7 @@ export const fetchHeroesEpic = (
   action$: ActionsObservable<heroesActions.HeroAction>, 
   state$: StateObservable<fromReducer.IState>, 
   { heroesService }: IFetchHeroesEpicDependencies
-) => 
+) =>
 action$.pipe(
   ofType(heroesActions.HEROES_FETCH),
   switchMap(() => {

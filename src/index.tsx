@@ -1,10 +1,17 @@
 import * as React from 'react';
 import * as ReactDOM from 'react-dom';
+import 'semantic-ui-css/semantic.min.css'
 import registerServiceWorker from './registerServiceWorker';
+import configureStore from './configureStore'
+import App from './components/App'
+import { Provider } from 'react-redux'
 
+const store = configureStore()
 
 ReactDOM.render(
-  <h1>Dota2</h1>,
+  <Provider store={store}>
+    <App />
+  </Provider>,
   document.getElementById('root') as HTMLElement
 );
 registerServiceWorker();

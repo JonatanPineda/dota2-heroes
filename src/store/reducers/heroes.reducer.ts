@@ -27,9 +27,9 @@ export function reducer(
     case fromHeroes.HEROES_FETCH_FULFILLED: {
       const heroes = action.payload.heroes
       const entities =  heroes.reduce(
-        (entities: { [id: number]: IHero }, hero: IHero) => {
+        (heroEntities: { [id: number]: IHero }, hero: IHero) => {
           return {
-            ...entities,
+            ...heroEntities,
             [hero.id]: hero
           }
         },
