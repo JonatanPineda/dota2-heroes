@@ -1,9 +1,9 @@
 import * as React from 'react'
-import styled, { ITheme } from '../styled'
 import { darken } from 'polished'
-import { Themed } from 'react-emotion'
 import { IHero } from '../models/hero.model';
 import { Container } from 'semantic-ui-react'
+import styled from 'react-emotion'
+
 
 const attrs = {
   str: '#f44336',
@@ -20,7 +20,7 @@ const HeroInfobox = styled('div')`
   background: rgba(0, 0, 0, 0.9);
   overflow: hidden;
   border-radius: 8px;
-  color: ${props => darken(0.25, '#fefefe')};
+  color: ${darken(0.25, '#fefefe')};
 `
 
 const HeroInfoboxBlurBackground = styled('img')`
@@ -45,7 +45,7 @@ const HeroInfoboxInner = styled('div')`
   box-shadow: rgba(0, 0, 0, 0.25) 0px 0px 125px inset;
   z-index: 2;
 
-  @media (min-width: ${props => '992px'}) {
+  @media (min-width: 992px) {
     flex-direction: row;
   }
 `
@@ -69,7 +69,7 @@ const HeroInfoboxHeading = styled('div')`
   margin: 1.5rem 0 0;
   text-align: center;
 
-  @media (min-width: ${props => '992px'}) {
+  @media (min-width: 992px}) {
     margin: 0 1.5rem;
     text-align: left;
   }
@@ -77,19 +77,19 @@ const HeroInfoboxHeading = styled('div')`
 
 const HeroName = styled('h1')`
   margin: 0;
-  color: ${props => '#fefefe'};
+  color: #fefefe;
   font-weight: 500;
 `
 
 const HeroDetails = styled('p')`
   margin: 0.5rem 0 0;
-  color: ${props => '#fefefe'};
+  color: #fefefe};
   font-size: 0.8rem;
   letter-spacing: 1px;
   text-transform: uppercase;
 
   & span {
-    color: ${props => darken(0.25, '#fefefe')};
+    color: ${darken(0.25, '#fefefe')};
   }
 `
 
@@ -101,7 +101,7 @@ const HeroStats = styled('div')`
   border-radius: 8px;
   padding: 12px;
 
-  @media (min-width: ${props => '992px'}) {
+  @media (min-width: 992px) {
     margin: 0;
     flex: 1 0 340px;
   }
@@ -122,7 +122,7 @@ const StatAttribute = styled('div')`
   flex: 1 1 0;
   padding: 0 1rem;
   font-size: 0.8rem;
-  color: ${(props: Themed<IStatAttributeProps, ITheme>) =>
+  color: ${(props: IStatAttributeProps) =>
     props.isPrimaryAttr && attrs[props.attr]};
 `
 
@@ -136,7 +136,7 @@ const Bullet = styled('div')`
   width: 0.5rem;
   margin-right: 8px;
   border-radius: 50%;
-  background-color: ${(props: Themed<IBulletProps, ITheme>) => attrs[props.attr]};
+  background-color: ${(props: IBulletProps) => attrs[props.attr]};
 `
 
 interface IProps {

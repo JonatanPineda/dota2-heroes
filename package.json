@@ -15,7 +15,6 @@
   "dependencies": {
     "dotaconstants": "^6.2.0",
     "emotion": "^9.2.12",
-    "emotion-theming": "^9.2.9",
     "humps": "^2.0.1",
     "polished": "^2.2.0",
     "react": "^16.5.2",
